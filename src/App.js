@@ -1,9 +1,9 @@
 import './App.css';
 import {
-  createBrowserRouter,
   RouterProvider,
   Outlet,
   Navigate,
+  createHashRouter,
 } from 'react-router-dom';
 import ProfilePage from './pages/ProfilePage';
 import Home from './pages/Home';
@@ -36,7 +36,7 @@ function App() {
     return children;
   };
 
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
       path: '/',
       element: (
