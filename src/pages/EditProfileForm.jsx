@@ -54,7 +54,7 @@ function EditProfileForm() {
         .max(60, 'You must be at most 60 years'),
       gender: yup.string().required('gender is required'),
       dob: yup.string().test('DOB', 'dob is not valid', (value) => {
-        return moment().diff(moment(value), 'years') >= 18;
+        return moment().diff(moment(value), 'years') >= formik.values.age;
       }),
       mobile: yup
         .string()
@@ -75,37 +75,15 @@ function EditProfileForm() {
         .required('* Required'),
     }),
     onSubmit: async (values) => {
-      const {
-        city,
-        street,
-        houseNumber,
-        state,
-        pincode,
-        country,
-        ...otherValues
-      } = values;
-
-      let payload = {
-        address: {
-          city,
-          street,
-          houseNumber,
-          state,
-          pincode,
-          country,
-        },
-        ...otherValues,
-      };
-
       try {
-        await axios.put(`${API_URL}/profile/${id}`, payload, {
+        await axios.put(`${API_URL}/profile/${id}`, values, {
           headers: {
             Authorization: localStorage.getItem('Authorization'),
           },
         });
 
         swal({
-          title: 'Welcome!',
+          title: 'Thank you!',
           text: 'Your profile has been updated successfully',
           icon: 'success',
           button: 'ok!',
@@ -117,12 +95,30 @@ function EditProfileForm() {
     },
   });
 
-  const { city, street, houseNumber, state, pincode, country } =
-    profile?.address;
+  const {
+    city,
+    street,
+    houseNumber,
+    state,
+    pincode,
+    country,
+    name,
+    email,
+    age,
+    gender,
+    dob,
+    mobile,
+  } = profile;
 
   useEffect(() => {
     formik.setValues({
       ...profile,
+      name,
+      email,
+      age,
+      gender,
+      dob,
+      mobile,
       city,
       street,
       houseNumber,

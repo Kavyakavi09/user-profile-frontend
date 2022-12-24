@@ -107,41 +107,41 @@ function ProfilePage() {
           <label for='houseNo' className='form-label' fs-5>
             House No
           </label>
-          <h5>{profile?.address?.houseNumber}</h5>
+          <h5>{profile?.houseNumber}</h5>
         </div>
 
         <div className='col-md-6'>
           <label for='street' className='form-label' fs-5>
             Street
           </label>
-          <h5>{profile?.address?.street}</h5>
+          <h5>{profile?.street}</h5>
         </div>
 
         <div className='col-md-6'>
           <label for='city' className='form-label' fs-5>
             City
           </label>
-          <h5>{profile?.address?.city}</h5>
+          <h5>{profile?.city}</h5>
         </div>
         <div className='col-md-6'>
           <label for='pincode' className='form-label' fs-5>
             Pincode
           </label>
-          <h5>{profile?.address?.pincode}</h5>
+          <h5>{profile?.pincode}</h5>
         </div>
 
         <div className='col-md-6'>
           <label for='state' className='form-label' fs-5>
             State
           </label>
-          <h5>{profile?.address?.state}</h5>
+          <h5>{profile?.state}</h5>
         </div>
 
         <div className='col-md-6'>
           <label for='country' className='form-label' fs-5>
             Country
           </label>
-          <h5>{profile?.address?.country}</h5>
+          <h5>{profile?.country}</h5>
         </div>
 
         <div className='d-flex justify-content-around'>

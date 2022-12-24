@@ -71,37 +71,15 @@ function ProfileForm() {
         .required('* Required'),
     }),
     onSubmit: async (values) => {
-      const {
-        city,
-        street,
-        houseNumber,
-        state,
-        pincode,
-        country,
-        ...otherValues
-      } = values;
-
-      let payload = {
-        address: {
-          city,
-          street,
-          houseNumber,
-          state,
-          pincode,
-          country,
-        },
-        ...otherValues,
-      };
-
       try {
-        await axios.post(`${API_URL}/profile/create`, payload, {
+        await axios.post(`${API_URL}/profile/create`, values, {
           headers: {
             Authorization: localStorage.getItem('Authorization'),
           },
         });
 
         swal({
-          title: 'Welcome!',
+          title: 'Thank you!',
           text: 'Your profile has been created successfully',
           icon: 'success',
           button: 'ok!',
@@ -347,7 +325,10 @@ function ProfileForm() {
             </div>
 
             <div className='col-md-6 d-flex justify-content-between'>
-              <button type='submit' className='btn btn-primary px-4 py-2'>
+              <button
+                type='submit'
+                className='btn btn-primary px-4 py-2'
+                disabled={Object.keys(formik.errors)?.length !== 0}>
                 SAVE
               </button>
               <Link to='/profile'>
