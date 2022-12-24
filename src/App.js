@@ -1,23 +1,85 @@
-import logo from './logo.svg';
 import './App.css';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  Navigate,
+} from 'react-router-dom';
+import ProfilePage from './pages/ProfilePage';
+import Home from './pages/Home';
+import Navbar from './components/Navbar';
+
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Password from './pages/ForgetPassword';
+import ResetPassword from './pages/ResetPassword';
+import EditProfileForm from './pages/EditProfileForm';
+import { useSelector } from 'react-redux';
 
 function App() {
+  const user = useSelector((state) => state?.user?.currentUser?.user);
+
+  const Layout = () => {
+    return (
+      <div>
+        <Navbar />
+        <Outlet />
+      </div>
+    );
+  };
+
+  const ProtectedRoute = ({ children }) => {
+    if (!user) {
+      return <Navigate to='/login' />;
+    }
+
+    return children;
+  };
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: (
+        <ProtectedRoute>
+          <Layout />
+        </ProtectedRoute>
+      ),
+      children: [
+        {
+          path: '/',
+          element: <Home />,
+        },
+        {
+          path: '/profile',
+          element: <ProfilePage />,
+        },
+        {
+          path: '/edit/:id',
+          element: <EditProfileForm />,
+        },
+      ],
+    },
+    {
+      path: '/login',
+      element: <Login />,
+    },
+    {
+      path: '/register',
+      element: <Register />,
+    },
+    {
+      path: '/forget',
+      element: <Password />,
+    },
+    {
+      path: '/reset/:token',
+      element: <ResetPassword />,
+    },
+  ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <RouterProvider router={router} />
     </div>
   );
 }
